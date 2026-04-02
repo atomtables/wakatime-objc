@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		33B5D6232F7E141E0075788F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 33B5D6212F7E141E0075788F /* main.m */; };
 		33B5D6302F7E15440075788F /* WTLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 33B5D62F2F7E15440075788F /* WTLogger.m */; };
+		33B5D6342F7ECF910075788F /* WTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 33B5D6332F7ECF910075788F /* WTUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		33B5D6212F7E141E0075788F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		33B5D62E2F7E15440075788F /* WTLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTLogger.h; sourceTree = "<group>"; };
 		33B5D62F2F7E15440075788F /* WTLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTLogger.m; sourceTree = "<group>"; };
+		33B5D6322F7ECF910075788F /* WTUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTUtils.h; sourceTree = "<group>"; };
+		33B5D6332F7ECF910075788F /* WTUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +63,7 @@
 		33B5D6222F7E141E0075788F /* wakatime-cli */ = {
 			isa = PBXGroup;
 			children = (
+				33B5D6312F7EC1460075788F /* Utils */,
 				33B5D62C2F7E15290075788F /* Logger */,
 				33B5D6212F7E141E0075788F /* main.m */,
 			);
@@ -73,6 +77,15 @@
 				33B5D62F2F7E15440075788F /* WTLogger.m */,
 			);
 			path = Logger;
+			sourceTree = "<group>";
+		};
+		33B5D6312F7EC1460075788F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				33B5D6322F7ECF910075788F /* WTUtils.h */,
+				33B5D6332F7ECF910075788F /* WTUtils.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33B5D6342F7ECF910075788F /* WTUtils.m in Sources */,
 				33B5D6302F7E15440075788F /* WTLogger.m in Sources */,
 				33B5D6232F7E141E0075788F /* main.m in Sources */,
 			);
@@ -200,7 +214,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -256,7 +270,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx10.9;
@@ -271,22 +285,18 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_LINK_OBJC_RUNTIME = YES;
 				CODE_SIGN_STYLE = Automatic;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-lobjc",
-					"-mmacosx-version-min=10.9",
-				);
+				OTHER_CFLAGS = "-lobjc";
 				OTHER_LDFLAGS = (
 					"-ld_classic",
 					"-Wl,-U,_objc_readClassPair",
-					"-mmacosx-version-min=10.9",
 					"-Wl,-U,_objc_loadClassref",
 					"-lobjc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				VALIDATE_DEPLOYMENT_TARGET = NO;
+				VALIDATE_DEPLOYMENT_TARGET = No;
 			};
 			name = Debug;
 		};
@@ -298,21 +308,18 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_LINK_OBJC_RUNTIME = YES;
 				CODE_SIGN_STYLE = Automatic;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				OTHER_CFLAGS = (
-					"-lobjc",
-					"-mmacosx-version-min=10.9",
-				);
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "-lobjc";
 				OTHER_LDFLAGS = (
 					"-ld_classic",
 					"-Wl,-U,_objc_readClassPair",
-					"-mmacosx-version-min=10.9",
 					"-Wl,-U,_objc_loadClassref",
 					"-lobjc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				VALIDATE_DEPLOYMENT_TARGET = NO;
+				VALIDATE_DEPLOYMENT_TARGET = No;
 			};
 			name = Release;
 		};
