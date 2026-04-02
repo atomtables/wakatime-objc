@@ -9,15 +9,25 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define WTLog(message) [[WTLogger shared] log:message withLogLevel:WTLoggerLogLevelDebug]
+#define WTWarn(message) [[WTLogger shared] log:message withLogLevel:WTLoggerLogLevelWarn]
+#define WTError(message) [[WTLogger shared] log:message withLogLevel:WTLoggerLogLevelError]
+
+typedef NS_ENUM(NSInteger, WTLoggerLogLevel) {
+    WTLoggerLogLevelDebug,
+    WTLoggerLogLevelWarn,
+    WTLoggerLogLevelError
+};
+
 @interface WTLogger : NSObject
 
 +(instancetype)shared;
 -(instancetype)init NS_UNAVAILABLE;
 +(instancetype)new NS_UNAVAILABLE;
 
--(void)log:(NSString*)message;
--(void)warn:(NSString*)message;
--(void)error:(NSString*)message;
+-(void)configureLoggerWithFilePath:(NSString*)filePath withStdout:(bool)useStdout withDebug:(bool)debug;
+
+-(void)log:(NSString*)message withLogLevel:(WTLoggerLogLevel)logLevel;
 
 @end
 

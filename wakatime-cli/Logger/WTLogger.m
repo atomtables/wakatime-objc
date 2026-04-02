@@ -12,25 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface WTLogger ()
     
 @property (nonatomic) NSString* filePathForLogging;
+@property (nonatomic) bool useStdout;
+@property (nonatomic) bool debug;
 
 @end
 
 @implementation WTLogger
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.filePathForLogging = [@"~/.wakatime/log.txt" stringByExpandingTildeInPath];
-        // Expand the tilde (~) to the full home directory path
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        // 1. Create the file if it doesn't exist
-        if (![fileManager fileExistsAtPath:self.filePathForLogging]) {
-            [fileManager createFileAtPath:self.filePathForLogging contents:nil attributes:nil];
-        }
-    }
-    return self;
-}
-    
 + (instancetype)shared {
     static WTLogger *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -40,44 +28,69 @@ NS_ASSUME_NONNULL_BEGIN
     return sharedInstance;
 }
 
-- (void)log:(NSString*)message {
-    if (DEBUG) {
-        NSLog(@"[DEBUG] %@", message);
-        NSFileHandle* handle = [NSFileHandle fileHandleForWritingAtPath:self.filePathForLogging];
-        if (handle) {
-            [handle seekToEndOfFile];
-            [handle writeData:[
-                [NSString stringWithFormat:@"[DEBUG] %@", message] dataUsingEncoding:NSUTF8StringEncoding
-            ]];
-        } else {
-            NSLog(@"[CRITICAL] failed to open log, aborting process. Goodbye");
-            abort();
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.filePathForLogging = [@"~/.wakatime/log.txt" stringByExpandingTildeInPath];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:self.filePathForLogging]) {
+            [fileManager createFileAtPath:self.filePathForLogging contents:nil attributes:nil];
         }
     }
+    return self;
+}
+    
+- (void)configureLoggerWithFilePath:(NSString *)filePath
+                         withStdout:(bool)useStdout
+                          withDebug:(bool)debug {
+    if (filePath) {
+        self.filePathForLogging = [filePath stringByExpandingTildeInPath];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        NSString *directory = [self.filePathForLogging stringByDeletingLastPathComponent];
+        NSError *error = nil;
+        [fileManager createDirectoryAtPath:directory
+               withIntermediateDirectories:YES
+                                attributes:nil
+                                     error:&error];
+        
+        if (![fileManager fileExistsAtPath:self.filePathForLogging])
+            [fileManager createFileAtPath:self.filePathForLogging
+                                 contents:nil
+                               attributes:nil];
+    }
+    self.useStdout = useStdout;
+    self.debug = debug;
 }
 
-- (void)warn:(NSString*)message {
-    NSLog(@"[WARN] %@", message);
-    NSFileHandle* handle = [NSFileHandle fileHandleForWritingAtPath:self.filePathForLogging];
-    if (handle) {
-        [handle seekToEndOfFile];
-        [handle writeData:[
-            [NSString stringWithFormat:@"[WARN] %@", message] dataUsingEncoding:NSUTF8StringEncoding
-        ]];
-    } else {
-        NSLog(@"[CRITICAL] failed to open log, aborting process. Goodbye");
-        abort();
+// C function because this is so unnecessary for it to be a message pass
+
+NSString* stringForLogLevel(WTLoggerLogLevel logLevel) {
+    switch (logLevel) {
+        case WTLoggerLogLevelDebug:
+            return @"DEBUG";
+        case WTLoggerLogLevelWarn:
+            return @"WARN";
+        case WTLoggerLogLevelError:
+            return @"ERROR";
+        default:
+            return @"CRITICAL";
     }
 }
 
-- (void)error:(NSString*)message {
-    NSLog(@"[ERROR] %@", message);
+- (void)log:(NSString*)message withLogLevel:(WTLoggerLogLevel)logLevel {
+    if (!self.debug && logLevel == WTLoggerLogLevelDebug && !DEBUG) return;
+    if (self.useStdout || logLevel == WTLoggerLogLevelError) {
+        NSLog(@"[%@] %@", stringForLogLevel(logLevel), message);
+    }
     NSFileHandle* handle = [NSFileHandle fileHandleForWritingAtPath:self.filePathForLogging];
     if (handle) {
         [handle seekToEndOfFile];
         [handle writeData:[
-            [NSString stringWithFormat:@"[ERROR] %@", message] dataUsingEncoding:NSUTF8StringEncoding
-        ]];
+            [NSString stringWithFormat:@"[%@] %@",
+                stringForLogLevel(logLevel), message] dataUsingEncoding:NSUTF8StringEncoding]
+        ];
     } else {
         NSLog(@"[CRITICAL] failed to open log, aborting process. Goodbye");
         abort();
