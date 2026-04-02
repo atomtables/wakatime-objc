@@ -65,7 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 // C function because this is so unnecessary for it to be a message pass
-
 NSString* stringForLogLevel(WTLoggerLogLevel logLevel) {
     switch (logLevel) {
         case WTLoggerLogLevelDebug:
@@ -74,12 +73,15 @@ NSString* stringForLogLevel(WTLoggerLogLevel logLevel) {
             return @"WARN";
         case WTLoggerLogLevelError:
             return @"ERROR";
+        case WTLoggerLogLevelSmurfme:
+            return @"DEV";
         default:
             return @"CRITICAL";
     }
 }
 
 - (void)log:(NSString*)message withLogLevel:(WTLoggerLogLevel)logLevel {
+    if (!DEBUG && logLevel == WTLoggerLogLevelSmurfme) return;
     if (!self.debug && logLevel == WTLoggerLogLevelDebug && !DEBUG) return;
     if (self.useStdout || logLevel == WTLoggerLogLevelError) {
         NSLog(@"[%@] %@", stringForLogLevel(logLevel), message);

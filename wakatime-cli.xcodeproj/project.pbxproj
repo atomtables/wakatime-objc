@@ -10,6 +10,7 @@
 		33B5D6232F7E141E0075788F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 33B5D6212F7E141E0075788F /* main.m */; };
 		33B5D6302F7E15440075788F /* WTLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 33B5D62F2F7E15440075788F /* WTLogger.m */; };
 		33B5D6342F7ECF910075788F /* WTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 33B5D6332F7ECF910075788F /* WTUtils.m */; };
+		33B5D6382F7EDB040075788F /* WTConfigParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 33B5D6372F7EDB030075788F /* WTConfigParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		33B5D62F2F7E15440075788F /* WTLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTLogger.m; sourceTree = "<group>"; };
 		33B5D6322F7ECF910075788F /* WTUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTUtils.h; sourceTree = "<group>"; };
 		33B5D6332F7ECF910075788F /* WTUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTUtils.m; sourceTree = "<group>"; };
+		33B5D6362F7EDB030075788F /* WTConfigParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WTConfigParser.h; sourceTree = "<group>"; };
+		33B5D6372F7EDB030075788F /* WTConfigParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WTConfigParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +66,7 @@
 		33B5D6222F7E141E0075788F /* wakatime-cli */ = {
 			isa = PBXGroup;
 			children = (
+				33B5D6352F7EDAF40075788F /* ConfigParser */,
 				33B5D6312F7EC1460075788F /* Utils */,
 				33B5D62C2F7E15290075788F /* Logger */,
 				33B5D6212F7E141E0075788F /* main.m */,
@@ -86,6 +90,15 @@
 				33B5D6332F7ECF910075788F /* WTUtils.m */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		33B5D6352F7EDAF40075788F /* ConfigParser */ = {
+			isa = PBXGroup;
+			children = (
+				33B5D6362F7EDB030075788F /* WTConfigParser.h */,
+				33B5D6372F7EDB030075788F /* WTConfigParser.m */,
+			);
+			path = ConfigParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33B5D6342F7ECF910075788F /* WTUtils.m in Sources */,
+				33B5D6382F7EDB040075788F /* WTConfigParser.m in Sources */,
 				33B5D6302F7E15440075788F /* WTLogger.m in Sources */,
 				33B5D6232F7E141E0075788F /* main.m in Sources */,
 			);

@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 #import "WTLogger.h"
+#import "WTUtils.h"
+#import "WTConfigParser.h"
 
 typedef NS_ENUM(NSInteger, WTExitCode) {
     // normal (heartbeat was sent)
@@ -29,6 +31,10 @@ int main(int argc, const char * argv[]) {
     WTLog(@"Hello World!");
     WTWarn(@"HelloWorld");
     WTError(@"hellworld");
+    
+    WTConfigParser* parser = [[WTConfigParser alloc] initWithPath:[NSString stringWithFormat:@"%@/.wakatime.cfg", [WTUtils wakatimeHomeDirectory]] withError:nil];
+    
+    NSLog(@"%@ %@ %ld", [parser readStringWithKey:WTConfigKeyApiKey], [parser readStringWithKey:WTConfigKeyApiUrl], (long)[parser readIntegerWithKey:WTConfigKeyHeartbeatRateLimitSeconds defaultValue:0]);
     
     return EXIT_SUCCESS;
 }

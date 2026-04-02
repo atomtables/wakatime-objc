@@ -9,14 +9,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define WTLog(message) [[WTLogger shared] log:message withLogLevel:WTLoggerLogLevelDebug]
-#define WTWarn(message) [[WTLogger shared] log:message withLogLevel:WTLoggerLogLevelWarn]
-#define WTError(message) [[WTLogger shared] log:message withLogLevel:WTLoggerLogLevelError]
+#define WTDebug(message, ...) [[WTLogger shared] log:[NSString stringWithFormat:message, ##__VA_ARGS__] withLogLevel:WTLoggerLogLevelSmurfme]
+#define WTLog(message, ...) [[WTLogger shared] log:[NSString stringWithFormat:message, ##__VA_ARGS__] withLogLevel:WTLoggerLogLevelDebug]
+#define WTWarn(message, ...) [[WTLogger shared] log:[NSString stringWithFormat:message, ##__VA_ARGS__] withLogLevel:WTLoggerLogLevelWarn]
+#define WTError(message, ...) [[WTLogger shared] log:[NSString stringWithFormat:message, ##__VA_ARGS__] withLogLevel:WTLoggerLogLevelError]
 
 typedef NS_ENUM(NSInteger, WTLoggerLogLevel) {
     WTLoggerLogLevelDebug,
     WTLoggerLogLevelWarn,
-    WTLoggerLogLevelError
+    WTLoggerLogLevelError,
+    WTLoggerLogLevelSmurfme
 };
 
 @interface WTLogger : NSObject
