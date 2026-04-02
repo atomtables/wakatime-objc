@@ -6,11 +6,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WTLogger.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
-        NSLog(@"Hello, World!");
+        [[WTLogger shared] log:@"Hello, World!"];
+        [[WTLogger shared] warn:@"Something bad's about to happen to me"];
+        [[WTLogger shared] error:@"I was right."];
     }
     return EXIT_SUCCESS;
 }
